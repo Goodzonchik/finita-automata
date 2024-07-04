@@ -1,0 +1,14 @@
+{
+  "name": "finita-automata",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc finita-automata.ts | node finita-automata.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies":{
+    "typescript": "5.5.3"
+  }
+}
