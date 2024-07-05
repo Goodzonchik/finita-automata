@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsc finita-automata.ts | node finita-automata.js"
+    "test": "npx tsc finita-automata.ts --target esnext | node finita-automata.js"
   },
   "author": "",
   "license": "ISC",
