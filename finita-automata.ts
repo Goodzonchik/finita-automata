@@ -53,21 +53,13 @@ class FinitaAutomata<T> {
         return this.getAvilableMoves()?.includes(status);
     }
 
-    moveToStatus(status: T, callback?: () => void){
+    moveToStatus(status: T){
         if(this.canMoveToStatus(status)){
-            try{
-                if (callback){
-                    callback();
-                }
-                
-                this.saveHistory({
-                    statusFrom: this.currentStatus,
-                    statusTo: status    
-                })
-                this.currentStatus = status;
-            }catch{
-                throw 'can`t call callback';
-            }
+            this.saveHistory({
+                statusFrom: this.currentStatus,
+                statusTo: status    
+            })
+            this.currentStatus = status;
         } else {
             throw `can't move to status ${status}`;
         }
