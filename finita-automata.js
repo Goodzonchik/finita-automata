@@ -15,6 +15,9 @@ class FinitaAutomata {
             throw 'initial status not found in statuses';
         }
     }
+    get status() {
+        return this.currentStatus;
+    }
     getStates() {
         return this.states;
     }
@@ -34,7 +37,6 @@ class FinitaAutomata {
                     callback();
                 }
                 this.saveHistory({
-                    callback,
                     statusFrom: this.currentStatus,
                     statusTo: status
                 });
@@ -53,11 +55,10 @@ class FinitaAutomata {
             return `${item.statusFrom ? `${item.statusFrom} -> ` : ''}${item.statusTo}`;
         });
     }
-    saveHistory({ statusFrom, statusTo, callback }) {
+    saveHistory({ statusFrom, statusTo }) {
         this.moveHistory.push({
             statusFrom,
-            statusTo,
-            callback
+            statusTo
         });
     }
 }
@@ -78,8 +79,8 @@ const automata = new FinitaAutomata([{
         avalableState: []
     }], 'draft');
 console.log(automata.getStates());
-console.log(automata.getAvilableMoves());
 automata.moveToStatus('published');
+console.log(automata.status);
 automata.moveToStatus('archived');
 automata.moveToStatus('deleted');
 console.log(automata.getHistory());

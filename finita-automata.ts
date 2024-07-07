@@ -5,15 +5,16 @@ type State<T> = {
     avalableState: T[],
 }
 
+type MoveHistory<T> = {
+    statusFrom?: T ,
+    statusTo: T,
+}
+
 class FinitaAutomata<T> {
     private states: State<T>[]
     private currentStatus: T;
 
-    private moveHistory: {
-        statusFrom?: T ,
-        statusTo: T,
-        callback?: () => void 
-    }[] = [];
+    private moveHistory: MoveHistory<T>[] = [];
 
     constructor(states: State<T>[], initialStatus: T) {
         this.states = states;
@@ -30,6 +31,10 @@ class FinitaAutomata<T> {
             throw 'initial status not found in statuses';
         }
         
+    }
+
+    get status(): T{
+        return this.currentStatus;
     }
 
     getStates(){
@@ -56,7 +61,6 @@ class FinitaAutomata<T> {
                 }
                 
                 this.saveHistory({
-                    callback,
                     statusFrom: this.currentStatus,
                     statusTo: status    
                 })
@@ -75,11 +79,10 @@ class FinitaAutomata<T> {
         });
     }
 
-    private saveHistory({statusFrom, statusTo, callback}: {statusFrom?: T, statusTo: T, callback?: () => void}) {
+    private saveHistory({statusFrom, statusTo}: MoveHistory<T>) {
         this.moveHistory.push({
             statusFrom,
-            statusTo,
-            callback})
+            statusTo})
     }
 }
 
@@ -101,13 +104,12 @@ const automata = new FinitaAutomata<StateStatus>([{
 }], 'draft');
 
 console.log(automata.getStates())
-console.log(automata.getAvilableMoves())
 
 automata.moveToStatus('published');
+console.log(automata.status);
 
 automata.moveToStatus('archived');
 
 automata.moveToStatus('deleted');
-
 
 console.log(automata.getHistory())
